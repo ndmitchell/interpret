@@ -3,12 +3,12 @@
 pub mod ast;
 pub mod bytecode;
 pub mod closure;
-pub mod closure_jump;
-pub mod closure_jump_register;
-pub mod closure_jump_register_compact;
-pub mod closure_jump_register_loop;
 pub mod closure_leak;
 pub mod example;
+pub mod jump_register;
+pub mod jump_register_compact;
+pub mod jump_register_loop;
+pub mod jump_stack;
 pub mod typ;
 
 mod registers;
