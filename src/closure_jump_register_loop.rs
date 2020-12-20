@@ -94,11 +94,13 @@ fn compiler(x: &Expr, codes: &mut Vec<isize>, reg: &mut usize) -> usize {
             0
         }
         Expr::While(a, b) => {
+            let len = measure(a) + measure(b);
+
             fn after_a<'a>(stack: Registers<'a, i64>, tape: Tape<'a, isize>) {
                 let (tape, r) = tape.next();
-                let (tape, len_b) = tape.next();
+                let (tape, len) = tape.next();
                 if stack.get(r as usize) == 0 {
-                    let tape = tape.jump(len_b);
+                    let tape = tape.jump(len);
                     let (tape, k) = tape.next();
                     call(k, stack, tape);
                 } else {
@@ -106,19 +108,28 @@ fn compiler(x: &Expr, codes: &mut Vec<isize>, reg: &mut usize) -> usize {
                     call(k, stack, tape);
                 }
             }
-            fn after_b<'a>(stack: Registers<'a, i64>, tape: Tape<'a, isize>) {
-                let (tape, len_ab) = tape.next();
-                let tape = tape.jump(len_ab);
-                let (tape, k) = tape.next();
-                call(k, stack, tape);
+            fn after_ba<'a>(stack: Registers<'a, i64>, tape: Tape<'a, isize>) {
+                let (tape, r) = tape.next();
+                let (tape, len) = tape.next();
+                if stack.get(r as usize) == 0 {
+                    let (tape, k) = tape.next();
+                    call(k, stack, tape);
+                } else {
+                    let tape = tape.jump(len);
+                    let (tape, k) = tape.next();
+                    call(k, stack, tape);
+                }
             }
             let res = compiler(a, codes, reg);
             codes.push(after_a as isize);
             codes.push(res as isize);
-            codes.push((measure(b) + 2) as isize);
+            codes.push((len + 3) as isize);
+
             compiler(b, codes, reg);
-            codes.push(after_b as isize);
-            codes.push(-((measure(a) + measure(b) + 5) as isize));
+            let res = compiler(a, codes, reg);
+            codes.push(after_ba as isize);
+            codes.push(res as isize);
+            codes.push(-((len + 3) as isize));
             0
         }
     }

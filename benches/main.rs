@@ -9,7 +9,9 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     let closure_leak = interpret::closure_leak::compile(&ast);
     let closure_jump = interpret::closure_jump::compile(&ast);
     let closure_jump_register = interpret::closure_jump_register::compile(&ast);
+    let closure_jump_register_loop = interpret::closure_jump_register_loop::compile(&ast);
     let closure_jump_register_compact = interpret::closure_jump_register_compact::compile(&ast);
+    let best = interpret::best::compile(&ast);
     let bytecode = interpret::bytecode::bytecode(REPEAT);
 
     let mut results = Vec::new();
@@ -22,9 +24,13 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     results.push(interpret::closure_jump_register::run(
         &closure_jump_register,
     ));
+    results.push(interpret::closure_jump_register_loop::run(
+        &closure_jump_register_loop,
+    ));
     results.push(interpret::closure_jump_register_compact::run(
         &closure_jump_register_compact,
     ));
+    results.push(interpret::best::run(&best));
     results.push(interpret::bytecode::run(&bytecode));
 
     println!("{:?}", results);
@@ -52,10 +58,18 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     group.bench_function("closure_jump_register", |b| {
         b.iter(|| interpret::closure_jump_register::run(black_box(&closure_jump_register)))
     });
+    group.bench_function("closure_jump_register_loop", |b| {
+        b.iter(|| {
+            interpret::closure_jump_register_loop::run(black_box(&closure_jump_register_loop))
+        })
+    });
     group.bench_function("closure_jump_register_compact", |b| {
         b.iter(|| {
             interpret::closure_jump_register_compact::run(black_box(&closure_jump_register_compact))
         })
+    });
+    group.bench_function("best", |b| {
+        b.iter(|| interpret::best::run(black_box(&best)))
     });
     group.bench_function("bytecode", |b| {
         b.iter(|| interpret::bytecode::run(black_box(&bytecode)))
