@@ -1,11 +1,13 @@
 pub fn main() {
-    let entries = interpret::entries(2);
+    for repeat in &[2, 3, 4] {
+        let entries = interpret::entries(*repeat);
 
-    let mut results = Vec::new();
-    for e in entries {
-        results.push(e.apply())
+        let mut results = Vec::new();
+        for e in entries {
+            results.push(e.apply())
+        }
+        println!("{:?}", results);
+        results.dedup();
+        assert_eq!(results.len(), 1);
     }
-    println!("{:?}", results);
-    results.dedup();
-    assert_eq!(results.len(), 1);
 }
