@@ -1,7 +1,6 @@
 #![feature(box_patterns)]
 
 pub mod ast;
-pub mod best;
 pub mod bytecode;
 pub mod closure;
 pub mod closure_jump;
