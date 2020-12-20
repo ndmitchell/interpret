@@ -47,7 +47,7 @@ pub fn compile(x: &Expr) -> Compiled {
     }
 }
 
-pub fn run(compiled: &Compiled) {
+pub fn run(compiled: &Compiled) -> i64 {
     let mut slots = vec![0; 10];
-    compiled(&mut slots);
+    compiled(&mut slots)
 }

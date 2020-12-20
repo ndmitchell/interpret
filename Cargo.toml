@@ -11,4 +11,6 @@ criterion = "0.3"
 name = "main"
 harness = false
 
-[lib]
+[[bin]]
+name = "main"
+path = "src/main.rs"
