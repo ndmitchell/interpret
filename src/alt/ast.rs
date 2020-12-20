@@ -1,6 +1,6 @@
 use crate::typ::Expr;
 
-pub fn interpret(x: &Expr) -> i64 {
+pub fn run(x: &Expr) -> i64 {
     fn f(x: &Expr, slots: &mut Vec<i64>) -> i64 {
         match x {
             Expr::Lit(i) => *i,

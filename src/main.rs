@@ -1,34 +1,34 @@
+use interpret::alt::*;
+
 const REPEAT: i64 = 2;
 
 pub fn main() {
     let ast = interpret::example::ast(REPEAT);
-    let closure = interpret::closure::compile(&ast);
-    let closure_leak = interpret::closure_leak::compile(&ast);
-    let jump_stack = interpret::jump_stack::compile(&ast);
-    let jump_register = interpret::jump_register::compile(&ast);
-    let jump_register_loop = interpret::jump_register_loop::compile(&ast);
-    let jump_register_compact = interpret::jump_register_compact::compile(&ast);
-    let bytecode = interpret::bytecode::bytecode(REPEAT);
+    let closure = closure::compile(&ast);
+    let closure_leak = closure_leak::compile(&ast);
+    let jump_stack = jump_stack::compile(&ast);
+    let jump_register = jump_register::compile(&ast);
+    let jump_register_loop = jump_register_loop::compile(&ast);
+    let jump_register_compact = jump_register_compact::compile(&ast);
+    let bytecode = bytecode::bytecode(REPEAT);
 
     let mut results = Vec::new();
     println!("A");
-    results.push(interpret::example::raw(REPEAT));
+    results.push(raw::run(REPEAT));
     println!("B");
-    results.push(interpret::ast::interpret(&ast));
+    results.push(ast::run(&ast));
     println!("C");
-    results.push(interpret::closure::run(&closure));
+    results.push(closure::run(&closure));
     println!("D");
-    results.push(interpret::closure_leak::run(closure_leak));
+    results.push(closure_leak::run(closure_leak));
     println!("E");
-    results.push(interpret::jump_stack::run(&jump_stack));
+    results.push(jump_stack::run(&jump_stack));
     println!("F");
-    results.push(interpret::jump_register::run(&jump_register));
-    results.push(interpret::jump_register_loop::run(&jump_register_loop));
+    results.push(jump_register::run(&jump_register));
+    results.push(jump_register_loop::run(&jump_register_loop));
     println!("F");
-    results.push(interpret::jump_register_compact::run(
-        &jump_register_compact,
-    ));
-    results.push(interpret::bytecode::run(&bytecode));
+    results.push(jump_register_compact::run(&jump_register_compact));
+    results.push(bytecode::run(&bytecode));
     println!("G");
 
     println!("{:?}", results);
