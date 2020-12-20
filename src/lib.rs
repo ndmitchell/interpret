@@ -64,5 +64,10 @@ pub fn entries(repeat: i64) -> Vec<Entry> {
             jump_register_compact::compile(&ast),
             jump_register_compact::run,
         ),
+        Entry::new(
+            "jump_register_compact_loop",
+            jump_register_compact_loop::compile(&ast),
+            jump_register_compact_loop::run,
+        ),
     ]
 }
