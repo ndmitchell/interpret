@@ -53,7 +53,7 @@ impl Stack {
     }
 }
 
-pub fn run(xs: &[Bytecode]) -> i64 {
+pub fn run(xs: &Vec<Bytecode>) -> i64 {
     let mut pc = 0;
     let mut slots = vec![0; 10];
     let mut stack = Stack::new();
