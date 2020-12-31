@@ -1,11 +1,11 @@
-use crate::typ::Expr;
+use crate::typ::{Expr, add};
 
 pub fn run(x: &Expr) -> i64 {
     fn f(x: &Expr, slots: &mut Vec<i64>) -> i64 {
         match x {
             Expr::Lit(i) => *i,
             Expr::Var(u) => unsafe { *slots.get_unchecked(*u) },
-            Expr::Add(x, y) => f(x, slots) + f(y, slots),
+            Expr::Add(x, y) => add(f(x, slots), f(y, slots)),
             Expr::Then(x, y) => {
                 f(x, slots);
                 f(y, slots)

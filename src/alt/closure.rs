@@ -1,4 +1,4 @@
-use crate::typ::Expr;
+use crate::typ::{add, Expr};
 
 type Compiled = Box<dyn Fn(&mut Vec<i64>) -> i64>;
 
@@ -15,7 +15,7 @@ pub fn compile(x: &Expr) -> Compiled {
         Expr::Add(x, y) => {
             let x = compile(x);
             let y = compile(y);
-            Box::new(move |slots| x(slots) + y(slots))
+            Box::new(move |slots| add(x(slots), y(slots)))
         }
         Expr::Then(x, y) => {
             let x = compile(x);

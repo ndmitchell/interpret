@@ -1,7 +1,4 @@
-#[inline(never)]
-fn add(x: i64, y: i64) -> i64 {
-    x + y
-}
+use crate::typ::add;
 
 pub fn run(mut x0: i64) -> i64 {
     let mut x1: i64 = 100;

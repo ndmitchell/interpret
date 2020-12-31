@@ -1,3 +1,5 @@
+use crate::typ::add;
+
 pub enum Bytecode {
     Assign(u32),  // assign the value at the top of the stack to a slot
     Var(u32),     // push the value in slot to the top of the stack
@@ -68,7 +70,7 @@ pub fn run(xs: &Vec<Bytecode>) -> i64 {
             Add => {
                 let x = stack.pop();
                 let y = stack.pop();
-                stack.push(x + y)
+                stack.push(add(x, y))
             }
             Jump(pc2) => pc = pc2 as usize - 1,
             JumpIf0(pc2) => {

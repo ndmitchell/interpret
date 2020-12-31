@@ -1,4 +1,4 @@
-use crate::typ::Expr;
+use crate::typ::{add, Expr};
 use crate::{
     stack::{Stack, StackOwner},
     tape::Tape,
@@ -59,7 +59,7 @@ fn compiler(x: &Expr, codes: &mut Vec<isize>, height: &mut usize) {
                 let (tape, k) = tape.next();
                 let (stack, x) = stack.pop();
                 let (stack, y) = stack.pop();
-                let stack = stack.push(x + y);
+                let stack = stack.push(add(x, y));
                 call(k, stack, tape)
             }
             codes.push(f as isize);

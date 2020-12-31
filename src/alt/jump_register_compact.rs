@@ -1,4 +1,4 @@
-use crate::typ::Expr;
+use crate::typ::{add, Expr};
 use crate::{registers::Registers, tape::Tape};
 
 type Compiled<'a> = fn(Registers<'a, i64>, Tape<'a, isize>);
@@ -47,7 +47,10 @@ fn compiler(x: &Expr, codes: &mut Vec<isize>, reg: &mut usize) -> usize {
                 let (tape, y) = tape.next();
                 let (tape, z) = tape.next();
                 let (tape, k) = tape.next();
-                stack.set(z as usize, stack.get(x as usize) + stack.get(y as usize));
+                stack.set(
+                    z as usize,
+                    add(stack.get(x as usize), stack.get(y as usize)),
+                );
                 call(k, stack, tape)
             }
             codes.push(f as isize);
