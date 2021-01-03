@@ -7,3 +7,12 @@ pub fn run(mut x0: i64) -> i64 {
     }
     x1
 }
+
+pub fn run2(mut x0: i64) -> i64 {
+    let mut x1: i64 = 100;
+    while x0 != 0 {
+        x1 = x1 + x1 + 13;
+        x0 = x0 - 1;
+    }
+    x1
+}

@@ -41,6 +41,7 @@ pub fn entries(repeat: i64) -> Vec<Entry> {
 
     vec![
         Entry::new("raw", repeat, |x| raw::run(*x)),
+        Entry::new("raw2", repeat, |x| raw::run2(*x)),
         Entry::new("poor", repeat, |x| poor::run(*x)),
         Entry::new("ast", ast.as_ref().clone(), ast::run),
         Entry::new("bytecode", bytecode::bytecode(repeat), bytecode::run),
