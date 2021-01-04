@@ -11,6 +11,4 @@ jobs:
         with:
           toolchain: nightly
           override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: bench
+      - run: cargo bench
