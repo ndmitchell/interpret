@@ -78,7 +78,10 @@ fn compiler(x: &Expr, codes: &mut Vec<isize>, reg: &mut usize) -> usize {
                 let (tape, xyz) = tape.next();
                 let (x, y, z) = uncompact(xyz);
                 let (tape, k) = tape.next();
-                stack.set(z as usize, stack.get(x as usize) + stack.get(y as usize));
+                stack.set(
+                    z as usize,
+                    add(stack.get(x as usize), stack.get(y as usize)),
+                );
                 call(k, stack, tape)
             }
             codes.push(f as isize);
